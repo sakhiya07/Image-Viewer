@@ -12,7 +12,7 @@ const switchImage = (imageClass) => {
   document.querySelector("." + newImageClass).style.background = "blue";
   const printImage = imageArray.filter((item, index) => index === imageClass);
   console.log(printImage);
-  document.querySelector(".right").innerHTML = `
+  document.querySelector(".rightChild").innerHTML = `
   <img
         src=${printImage[0].previewImage}
         alt="loading"
@@ -21,11 +21,13 @@ const switchImage = (imageClass) => {
   `;
 };
 
+// Rendered accroding to imageArray
 const renderDefault = () => {
-  const main = document.querySelector(".main");
+  const left = document.querySelector(".left");
+  const right = document.querySelector(".right");
   imageArray.forEach((item, index) => {
     const newDiv = document.createElement("div");
-    newDiv.classList.add("left");
+    newDiv.classList.add("leftChild");
     newDiv.classList.add(`image-${index}`);
     crtImage === index ? (newDiv.style.background = "blue") : "";
     const divContent = `
@@ -33,11 +35,16 @@ const renderDefault = () => {
           src=${item.previewImage}
           alt="loading"
         />
-        <h4>${item.title}</h4>
+        <h4>${
+          item.title.length > 33
+            ? item.title.slice(0, 16) +
+              "..." +
+              item.title.slice(item.title.length - 15)
+            : item.title
+        }</h4>
     `;
     newDiv.innerHTML = divContent;
-    main.appendChild(newDiv);
-    console.log(main);
+    left.appendChild(newDiv);
     newDiv.addEventListener("click", function () {
       switchImage(index);
     });
@@ -45,23 +52,24 @@ const renderDefault = () => {
     //     console.log(newDiv);
     if (crtImage === index) {
       const newDiv = document.createElement("div");
-      newDiv.classList.add("right");
+      newDiv.classList.add("rightChild");
       const divContent = `
-     <img
+        <img
            src=${item.previewImage}
            alt="loading"
          />
          <h4>${item.title}</h4>
      `;
       newDiv.innerHTML = divContent;
-      //  console.log(newDiv);
-      main.appendChild(newDiv);
+      console.log(newDiv);
+      right.appendChild(newDiv);
     }
   });
 };
 
 renderDefault();
 
+// For ARROW KEY added event listener.
 document.addEventListener("keydown", (event) => {
   if (event.key === "ArrowUp" && crtImage > 0) {
     switchImage(crtImage - 1);
