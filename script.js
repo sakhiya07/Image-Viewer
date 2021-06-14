@@ -45,15 +45,12 @@ const renderDefault = () => {
           src=${item.previewImage}
           alt="loading"
         />
-        <h4>${
-          item.title.length > 33
-            ? item.title.slice(0, 16) +
-              "..." +
-              item.title.slice(item.title.length - 15)
-            : item.title
-        }</h4>
+        <h4>${item.title}</h4>
     `;
     newDiv.innerHTML = divContent;
+    console.log(newDiv);
+    console.log(newDiv.querySelector("h4").scrollWidth);
+
     crtImage === index
       ? (newDiv.querySelector("h4").style.color = "white")
       : "";
@@ -76,7 +73,7 @@ const renderDefault = () => {
          <h4>${item.title}</h4>
      `;
       newDiv.innerHTML = divContent;
-      console.log(newDiv);
+      // console.log(newDiv);
       right.appendChild(newDiv);
     }
   });
@@ -93,3 +90,28 @@ document.addEventListener("keydown", (event) => {
     switchImage(crtImage + 1);
   }
 });
+
+window.onload = () => {
+  imageArray.forEach((item, index) => {
+    let className = "image-" + index.toString();
+    let scrollWidth = document
+      .querySelector("." + className)
+      .querySelector("h4").scrollWidth;
+    let clientWidth = document
+      .querySelector("." + className)
+      .querySelector("h4").clientWidth;
+    let maxSize = Math.floor((clientWidth / scrollWidth) * item.title.length);
+
+    let crtTitle = item.title;
+    if (clientWidth < scrollWidth) {
+      crtTitle =
+        crtTitle.slice(0, Math.floor((maxSize - 3) / 2)) +
+        "..." +
+        crtTitle.slice(crtTitle.length - Math.floor((maxSize - 3) / 2));
+    }
+    console.log(maxSize);
+    document
+      .querySelector("." + className)
+      .querySelector("h4").innerText = `${crtTitle}`;
+  });
+};

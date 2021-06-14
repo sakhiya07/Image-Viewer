@@ -18,6 +18,10 @@ body {
 
 /* left container */
 
+.left {
+  max-width: 300px;
+}
+
 .leftChild {
   /* border: 4px solid black; */
   border-radius: 5px;
@@ -27,31 +31,31 @@ body {
 }
 
 .leftChild img {
-  width: 2.5vw;
-  height: 5vh;
+  width: 44.8px;
+  height: 44.8px;
+  min-width: 44.8px;
   border-radius: 5px;
   object-fit: cover;
 }
 .leftChild h4 {
   margin: 0;
   font-weight: 400;
-  margin-left: 6px;
+  padding-left: 6px;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 17px;
 }
 
 /* right container */
-.right {
-  /* border: 4px solid black; */
-  flex-direction: column;
-}
+
 .rightChild {
-  align-self: stretch;
   grid-column: 2/3;
   border-radius: 5px;
 }
 
 .rightChildImage {
-  width: 34vw;
-  height: 88vh;
+  width: 100%;
+  height: 80%;
 }
 
 .rightChild img {
